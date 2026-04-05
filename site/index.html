@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EquiLearn — Ensure Access to Learning for All</title>
+    <meta name="description" content="An interactive data exploration of inequality in access to France's top engineering schools — examining gender, economic, and territorial disparities through data visualization.">
+
+    <!-- Google Fonts: Playfair Display (editorial) + Inter (clean UI) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- GSAP + ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+
+    <!-- D3.js -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- ========== HERO SECTION ========== -->
+    <section id="hero" class="hero">
+        <div class="hero-particles" id="hero-particles"></div>
+        <div class="hero-content">
+            <div class="hero-badge">Interactive Data Documentary</div>
+            <h1 class="hero-title">
+                <span class="hero-title-line">Equi</span><span class="hero-title-accent">Learn</span>
+            </h1>
+            <p class="hero-subtitle">Ensure access to learning for all, without barriers.</p>
+            <p class="hero-description">
+                Exploring the labyrinth of inequality in access to France's top engineering schools
+                through gender, economic, and territorial lenses.
+            </p>
+            <a href="#medusa-map" class="hero-cta" id="hero-cta">
+                <span>Begin the Journey</span>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 5v14M5 12l7 7 7-7"/>
+                </svg>
+            </a>
+        </div>
+    </section>
+
+    <!-- ========== INTRO SECTION ========== -->
+    <section id="intro" class="intro-section">
+        <div class="container">
+            <div class="intro-card reveal-up">
+                <div class="intro-icon">🎓</div>
+                <h2>The Path to Engineering Schools</h2>
+                <p>
+                    In France, the pathway to top engineering schools (<em>Grandes Écoles</em>) 
+                    is a complex journey through high school specializations, preparatory classes (CPGE), 
+                    and competitive entrance exams. But not everyone starts from the same line.
+                </p>
+                <p>
+                    <strong>Gender, wealth, and geography</strong> create invisible barriers that filter out 
+                    talent long before the exam room. This interactive documentary maps those barriers 
+                    with real data.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== MEDUSA MAP ========== -->
+    <section id="medusa-map" class="medusa-section">
+        <div class="container">
+            <h2 class="section-title reveal-up">Navigate the Obstacles</h2>
+            <p class="section-subtitle reveal-up">Click on a milestone to dive into the data behind each barrier.</p>
+            <div class="medusa-container" id="medusa-container">
+                <canvas id="medusa-canvas"></canvas>
+                <!-- Clickable node overlays -->
+                <div class="medusa-node" id="node-gender" data-target="gender-section">
+                    <div class="node-pulse"></div>
+                    <div class="node-icon">⚤</div>
+                    <div class="node-label">Gender<br>Disparities</div>
+                </div>
+                <div class="medusa-node" id="node-economic" data-target="economic-section">
+                    <div class="node-pulse"></div>
+                    <div class="node-icon">💰</div>
+                    <div class="node-label">Economic<br>Disparities</div>
+                </div>
+                <div class="medusa-node" id="node-territorial" data-target="territorial-section">
+                    <div class="node-pulse"></div>
+                    <div class="node-icon">🗺️</div>
+                    <div class="node-label">Territorial<br>Disparities</div>
+                </div>
+                <!-- Animated avatar -->
+                <div class="medusa-avatar" id="medusa-avatar">
+                    <svg viewBox="0 0 40 60" width="40" height="60">
+                        <circle cx="20" cy="12" r="8" fill="#1a4031"/>
+                        <line x1="20" y1="20" x2="20" y2="40" stroke="#1a4031" stroke-width="3" stroke-linecap="round"/>
+                        <line x1="20" y1="26" x2="10" y2="34" stroke="#1a4031" stroke-width="2.5" stroke-linecap="round"/>
+                        <line x1="20" y1="26" x2="30" y2="34" stroke="#1a4031" stroke-width="2.5" stroke-linecap="round"/>
+                        <line x1="20" y1="40" x2="12" y2="55" stroke="#1a4031" stroke-width="2.5" stroke-linecap="round"/>
+                        <line x1="20" y1="40" x2="28" y2="55" stroke="#1a4031" stroke-width="2.5" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <!-- Destination pillar -->
+                <div class="medusa-destination" id="medusa-destination">
+                    <span>Top Engineering<br>Schools</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== GENDER SECTION ========== -->
+    <section id="gender-section" class="deep-dive-section" data-theme="gender">
+        <div class="section-header">
+            <div class="container">
+                <a href="#medusa-map" class="back-to-map">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Back to Map
+                </a>
+                <div class="section-number">01</div>
+                <h2 class="deep-dive-title reveal-up">Gender Disparities</h2>
+                <p class="deep-dive-subtitle reveal-up">Women are progressively filtered out at every stage of the pipeline to engineering schools.</p>
+            </div>
+        </div>
+
+        <!-- Chart: Gender by Region -->
+        <div class="chart-block reveal-up" id="chart-gender-region">
+            <div class="container">
+                <div class="chart-header">
+                    <h3>Gender Balance in Science Specializations by Region</h3>
+                    <div class="chart-year-badge" id="spec-year-badge"></div>
+                </div>
+                <div class="chart-wrapper chart-wrapper--wide">
+                    <canvas id="chart-regional-gender" height="400"></canvas>
+                </div>
+                <div class="insight-box">
+                    <div class="insight-icon">💡</div>
+                    <div class="insight-text" id="insight-regional-gender">
+                        Loading insights...
+                    </div>
+                </div>
+                <div class="source-citation">Source: Ministry of Education — High School Specialization Enrollments</div>
+            </div>
+        </div>
+
+        <!-- Chart: Per Specialization Breakdown -->
+        <div class="chart-block reveal-up" id="chart-gender-spec">
+            <div class="container">
+                <div class="chart-header">
+                    <h3>Gender Breakdown in Each Scientific Specialization</h3>
+                </div>
+                <div class="chart-wrapper chart-wrapper--tall">
+                    <canvas id="chart-spec-breakdown" height="500"></canvas>
+                </div>
+                <div class="insight-box">
+                    <div class="insight-icon">💡</div>
+                    <div class="insight-text" id="insight-spec-breakdown">
+                        Loading insights...
+                    </div>
+                </div>
+                <div class="source-citation">Source: Ministry of Education — <em>Effectifs des spécialités en terminale générale</em> (data.education.gouv.fr)</div>
+            </div>
+        </div>
+
+        <!-- Chart: Parcoursup Funnel Girls -->
+        <div class="chart-block reveal-up" id="chart-funnel-girls">
+            <div class="container">
+                <div class="chart-header">
+                    <h3>Parcoursup Selection Funnel for CPGE — Girls vs. Overall</h3>
+                    <div class="chart-year-badge" id="funnel-year-badge"></div>
+                </div>
+                <div class="funnel-comparison">
+                    <div class="funnel-column">
+                        <h4>Overall CPGE Funnel</h4>
+                        <div class="funnel-chart" id="funnel-overall"></div>
+                    </div>
+                    <div class="funnel-column">
+                        <h4>Girls Only</h4>
+                        <div class="funnel-chart" id="funnel-girls"></div>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <div class="insight-icon">💡</div>
+                    <div class="insight-text" id="insight-funnel-girls">
+                        Loading insights...
+                    </div>
+                </div>
+                <div class="source-citation">Source: Parcoursup Open Data — Session <span id="parcoursup-session-year"></span> (data.enseignementsup-recherche.gouv.fr)</div>
+            </div>
+        </div>
+
+        <!-- Chart: Girls in CPGE Over Time -->
+        <div class="chart-block reveal-up" id="chart-cpge-timeline">
+            <div class="container">
+                <div class="chart-header">
+                    <h3>Evolution of Girls in Scientific CPGEs (Public Institutions)</h3>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="chart-girls-timeline" height="350"></canvas>
+                </div>
+                <div class="insight-box">
+                    <div class="insight-icon">💡</div>
+                    <div class="insight-text" id="insight-girls-timeline">
+                        Loading insights...
+                    </div>
+                </div>
+                <div class="source-citation">Source: Ministry of Education — <em>Effectifs en CPGE</em> (data.education.gouv.fr)</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== ECONOMIC SECTION ========== -->
+    <section id="economic-section" class="deep-dive-section" data-theme="economic">
+        <div class="section-header">
+            <div class="container">
+                <a href="#medusa-map" class="back-to-map">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Back to Map
+                </a>
+                <div class="section-number">02</div>
+                <h2 class="deep-dive-title reveal-up">Economic Disparities</h2>
+                <p class="deep-dive-subtitle reveal-up">Financial background remains one of the strongest predictors of educational trajectory.</p>
+            </div>
+        </div>
+
+        <!-- Chart: Scholarship Students by Department -->
+        <div class="chart-block reveal-up" id="chart-boursiers-dept">
+            <div class="container">
+                <div class="chart-header">
+                    <h3>Scholarship Students by Department</h3>
+                    <div class="chart-year-badge" id="boursiers-year-badge"></div>
+                </div>
+                <div class="chart-wrapper chart-wrapper--map">
+                    <div id="map-boursiers" class="d3-map"></div>
+                </div>
+                <div class="insight-box">
+                    <div class="insight-icon">💡</div>
+                    <div class="insight-text" id="insight-boursiers-dept">
+                        Loading insights...
+                    </div>
+                </div>
+                <div class="source-citation">Source: Ministry of Education — <em>Boursiers par département</em> (data.education.gouv.fr)</div>
+            </div>
+        </div>
+
+        <!-- Chart: Public vs Private -->
+        <div class="chart-block reveal-up" id="chart-boursiers-sector">
+            <div class="container">
+                <div class="chart-header">
+                    <h3>Scholarship Students in Public vs. Private Schools</h3>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="chart-sector" height="350"></canvas>
+                </div>
+                <div class="insight-box">
+                    <div class="insight-icon">💡</div>
+                    <div class="insight-text" id="insight-sector">
+                        Loading insights...
+                    </div>
+                </div>
+                <div class="source-citation">Source: Ministry of Education — <em>Boursiers par département</em> (data.education.gouv.fr)</div>
+            </div>
+        </div>
+
+        <!-- Chart: Parcoursup Funnel Scholarship -->
+        <div class="chart-block reveal-up" id="chart-funnel-scholarship">
+            <div class="container">
+                <div class="chart-header">
+                    <h3>Parcoursup Selection Funnel for CPGE — Scholarship Students vs. Overall</h3>
+                </div>
+                <div class="funnel-comparison">
+                    <div class="funnel-column">
+                        <h4>Overall CPGE Funnel</h4>
+                        <div class="funnel-chart" id="funnel-overall-2"></div>
+                    </div>
+                    <div class="funnel-column">
+                        <h4>Scholarship Students</h4>
+                        <div class="funnel-chart" id="funnel-scholarship"></div>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <div class="insight-icon">💡</div>
+                    <div class="insight-text" id="insight-funnel-scholarship">
+                        Loading insights...
+                    </div>
+                </div>
+                <div class="source-citation">Source: Parcoursup Open Data (data.enseignementsup-recherche.gouv.fr)</div>
+            </div>
+        </div>
+
+        <!-- Chart: Scatter Admission Rates -->
+        <div class="chart-block reveal-up" id="chart-scatter-admission">
+            <div class="container">
+                <div class="chart-header">
+                    <h3>CPGE Admission Rates vs. Scholarship Students Admission Rates</h3>
+                </div>
+                <div class="chart-wrapper chart-wrapper--wide">
+                    <canvas id="chart-scatter" height="450"></canvas>
+                </div>
+                <div class="insight-box">
+                    <div class="insight-icon">💡</div>
+                    <div class="insight-text" id="insight-scatter">
+                        Loading insights...
+                    </div>
+                </div>
+                <div class="source-citation">Source: Parcoursup Open Data (data.enseignementsup-recherche.gouv.fr)</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== TERRITORIAL SECTION ========== -->
+    <section id="territorial-section" class="deep-dive-section" data-theme="territorial">
+        <div class="section-header">
+            <div class="container">
+                <a href="#medusa-map" class="back-to-map">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Back to Map
+                </a>
+                <div class="section-number">03</div>
+                <h2 class="deep-dive-title reveal-up">Territorial Disparities</h2>
+                <p class="deep-dive-subtitle reveal-up">Where you live determines what opportunities you can access.</p>
+            </div>
+        </div>
+
+        <!-- Chart: IPS Choropleth -->
+        <div class="chart-block reveal-up" id="chart-ips">
+            <div class="container">
+                <div class="chart-header">
+                    <h3>Social Position Index (IPS) of French High Schools by Department</h3>
+                    <div class="chart-year-badge" id="ips-year-badge"></div>
+                </div>
+                <div class="chart-wrapper chart-wrapper--map">
+                    <div id="map-ips" class="d3-map"></div>
+                </div>
+                <div class="insight-box">
+                    <div class="insight-icon">💡</div>
+                    <div class="insight-text" id="insight-ips">
+                        Loading insights...
+                    </div>
+                </div>
+                <div class="source-citation">Source: Ministry of Education — <em>Indices de position sociale des lycées</em> (data.education.gouv.fr)</div>
+            </div>
+        </div>
+
+        <!-- Chart: CPGE Geographic Distribution -->
+        <div class="chart-block reveal-up" id="chart-cpge-geo">
+            <div class="container">
+                <div class="chart-header">
+                    <h3>Geographic Distribution of Scientific CPGE Programs</h3>
+                </div>
+                <div class="chart-wrapper chart-wrapper--map">
+                    <div id="map-cpge" class="d3-map"></div>
+                </div>
+                <div class="insight-box">
+                    <div class="insight-icon">💡</div>
+                    <div class="insight-text" id="insight-cpge-geo">
+                        Loading insights...
+                    </div>
+                </div>
+                <div class="source-citation">Source: Parcoursup Open Data (data.enseignementsup-recherche.gouv.fr)</div>
+            </div>
+        </div>
+
+        <!-- Chart: IPS by Region Bar -->
+        <div class="chart-block reveal-up" id="chart-ips-region">
+            <div class="container">
+                <div class="chart-header">
+                    <h3>Average Social Position Index (IPS) by Academic Region</h3>
+                </div>
+                <div class="chart-wrapper chart-wrapper--tall">
+                    <canvas id="chart-ips-bars" height="500"></canvas>
+                </div>
+                <div class="insight-box">
+                    <div class="insight-icon">💡</div>
+                    <div class="insight-text" id="insight-ips-region">
+                        Loading insights...
+                    </div>
+                </div>
+                <div class="source-citation">Source: Ministry of Education — <em>Indices de position sociale des lycées</em> (data.education.gouv.fr)</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== CONCLUSION ========== -->
+    <section id="conclusion" class="conclusion-section">
+        <div class="container">
+            <div class="conclusion-card reveal-up">
+                <h2>The Road Ahead</h2>
+                <p>
+                    These data tell a clear story: access to France's engineering elite is shaped by factors 
+                    far beyond academic merit. From the specializations students choose in high school, 
+                    to the filtering of the Parcoursup platform, to the geographic lottery of where 
+                    CPGE programs exist — the obstacles compound.
+                </p>
+                <p>
+                    <strong>EquiLearn</strong> believes that talent is equally distributed; opportunity is not. 
+                    By making these patterns visible, we take the first step toward equity.
+                </p>
+                <div class="conclusion-stats">
+                    <div class="conclusion-stat">
+                        <span class="stat-number" id="stat-candidates">—</span>
+                        <span class="stat-label">Total CPGE Candidates</span>
+                    </div>
+                    <div class="conclusion-stat">
+                        <span class="stat-number" id="stat-admitted">—</span>
+                        <span class="stat-label">Actually Admitted</span>
+                    </div>
+                    <div class="conclusion-stat">
+                        <span class="stat-number" id="stat-girls-pct">—</span>
+                        <span class="stat-label">Girls Among Admitted</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="footer-logo">Equi<span>Learn</span></span>
+                    <p>Ensure access to learning for all, without barriers.</p>
+                </div>
+                <div class="footer-sources">
+                    <h4>Data Sources</h4>
+                    <ul>
+                        <li>Parcoursup Open Data (data.enseignementsup-recherche.gouv.fr)</li>
+                        <li>Effectifs en CPGE (data.education.gouv.fr)</li>
+                        <li>Spécialités en Terminale (data.education.gouv.fr)</li>
+                        <li>Boursiers par département (data.education.gouv.fr)</li>
+                        <li>Indices de Position Sociale des Lycées (data.education.gouv.fr)</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>Made with data & care · EquiLearn Project 2026</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- D3 tooltip -->
+    <div class="d3-tooltip" id="d3-tooltip"></div>
+
+    <!-- Data & App Scripts -->
+    <script src="data.js"></script>
+    <script src="france-geo.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

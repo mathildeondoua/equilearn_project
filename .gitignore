@@ -3,3 +3,9 @@ data/
 
 # mvp
 mvp/
+
+venv/
+__pycache__/
+*.pyc
+.env
+.ipynb_checkpoints/

@@ -1,0 +1,73 @@
+﻿============================================================
+EquiLearn Data Processing
+============================================================
+
+[1/6] Processing CPGE Effectifs...
+
+[2/6] Processing Specializations...
+  Found 35 total specialization pairs
+  Found 14 scientific specialization pairs
+    - 0001 - MATHEMATIQUES/PHYSIQUE-CHIMIE
+    - 0003 - PHYSIQUE-CHIMIE/SCIENCES DE LA VIE ET DE LA TERRE
+    - 0004 - MATHEMATIQUES/SCIENCES DE LA VIE ET DE LA TERRE
+    - 0005 - MATHEMATIQUES/SCIENCES ECONOMIQUES ET SOCIALES
+    - 0009 - SCIENCES ECONOMIQUES ET SOCIALES/SCIENCES DE LA VIE ET DE LA TERRE
+    - 0011 - MATHEMATIQUES/NUMERIQUE ET SCIENCES INFORMATIQUES
+    - 0013 - HIST.-GEO. GEOPOLITIQUE & SC.POLITIQUES/MATHEMATIQUES
+    - 0014 - MATHEMATIQUES/SCIENCES INGE. ET PHY
+    - 0015 - HIST.-GEO. GEOPOLITIQUE & SC.POLITIQUES/SCIENCES DE LA VIE ET DE LA TERRE
+    - 0613 - MATHEMATIQUES
+    - 0623 - PHYSIQUE-CHIMIE
+    - 0629 - SCIENCES DE LA VIE ET DE LA TERRE
+    - 0747 - NUMERIQUE ET SCIENCES INFORMATIQUES
+    - 4806 - SCIENCES DE L'INGENIEUR ET SC. PHYSIQUES
+  Available years: ['2020', '2021', '2022', '2023', '2024']
+  Using latest year: 2024
+
+[3/6] Processing Parcoursup...
+  Total columns: 118
+  Total rows: 14252
+  Sessions: ['2025']
+  FiliÞres agrÚgÚes: ['Autre formation', 'BTS', 'BUT', 'CPGE', 'EFTS', "Ecole d'IngÚnieur", 'Ecole de Commerce', 'IFSI', 'Licence', 'Licence_Las', 'PASS']
+  Using session: 2025
+  CPGE rows for 2025: 986
+  Sample CPGE row filiÞres:
+    FiliÞre de formation: Classe prÚparatoire scientifique
+    FiliÞre de formation trÞs agrÚgÚe: CPGE
+    FiliÞre de formation dÚtaillÚe: LycÚe Jean Dautet - CPGE - PCSI
+    FiliÞre de formation dÚtaillÚe bis: PCSI
+    FiliÞre de formation trÞs dÚtaillÚe: 
+
+  FUNNEL DATA:
+    Total candidates: 1,300,268
+    Ranked: 636,611
+    Offered: 320,242
+    Admitted: 42,086
+    Girls candidates: 551,458
+    Girls admitted: 17,168
+    Scholarship candidates: 87,356
+    Scholarship admitted: 4,061
+
+[4/6] Processing Scholarship Students...
+  Years available: ['2020']
+  Using: 2020
+  Formation types: ['1ER CYCLE', '2EME CYCLE COURT PRO', '2EME CYCLE LONG GT', '2EME CYCLE LONG PRO', 'COLLEGE']
+
+[5/6] Processing IPS...
+  IPS years: ['2023-2024', '2024-2025']
+  Using: 2024-2025
+
+[6/6] Processing CPGE Student Paths...
+
+[Bonus] Processing Engineering Schools...
+  Sheets: ['Tab01', 'Tab02', 'Tab03']
+  Sheet 'Tab01': 19 rows x 8 cols
+    Headers: ["6.8 Les Útudiants des filiÞres d'ingÚnieurs", '', '', '', '', '', '', '']...
+  Sheet 'Tab02': 28 rows x 8 cols
+    Headers: ["6.8 Les Útudiants des filiÞres d'ingÚnieurs", '', '', '', '', '', '', '']...
+  Sheet 'Tab03': 14 rows x 8 cols
+    Headers: ["6.8 Les Útudiants des filiÞres d'ingÚnieurs", '', '', '', '', '', '', '']...
+
+============================================================
+Output: site\data.js (396,506 bytes)
+============================================================
