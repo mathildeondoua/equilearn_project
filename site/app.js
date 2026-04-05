@@ -613,9 +613,7 @@ function buildFunnelScholarship() {
     Scholarship students make up <strong>${candidatePct}</strong> of all Parcoursup CPGE candidates 
     but represent <strong>${scholarPct}</strong> of those admitted. 
     Remarkably, their admission rate (${funnel.scholarship.admission_rate}%) is slightly above the 
-    overall rate (${funnel.overall_admission_rate}%) — suggesting that those who apply despite financial 
-    barriers are highly motivated, yet the total numbers remain low, indicating a massive drop-out 
-    of scholarship students before they even reach the application stage.
+    overall rate (${funnel.overall_admission_rate}%) — it can be explain by the fact that Parcoursup particularly encourages scholarship students application to selective programs.
   `;
 }
 
